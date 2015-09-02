@@ -33,4 +33,13 @@
 #### eg 4. UICollectionViewDelegateFlowLayout 
 ![7](Resource/4-1.png)
 
+***
 
+1. 基本概念: UICollectionView
+	 - UICollectionCell
+	 - Supplementary Views
+	 - Decoration Views(using custom layout) 
+
+> Layouts can be swapped out during runtime and the collection view can even automatically animate switching from one layout to another!
+
+2.

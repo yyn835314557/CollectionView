@@ -1,18 +1,20 @@
 //
 //  CollectionViewController.swift
-//  UICollectionViewDelegateFlowLayout
+//  1.CollectionViewFlowLayout
 //
-//  Created by 游义男 on 15/8/7.
+//  Created by 游义男 on 15/9/2.
 //  Copyright (c) 2015年 游义男. All rights reserved.
 //
 
 import UIKit
 
-let reuseIdentifier = "Cell"
-var cellColor = true
+private let reuseIdentifier = "Cell"
+private var cellColor = true
+private let edgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+private let itemSize = CGSize(width: 75, height: 75)
+private let size = CGSize(width: 100, height: 30)
 
-class CollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
-
+class CollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout{
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,8 +24,6 @@ class CollectionViewController: UICollectionViewController,UICollectionViewDeleg
 
         // Register cell classes
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-//        self.title = "Video"
-//        self.view.backgroundColor = UIColor.whiteColor()
 
         // Do any additional setup after loading the view.
     }
@@ -33,38 +33,25 @@ class CollectionViewController: UICollectionViewController,UICollectionViewDeleg
         // Dispose of any resources that can be recreated.
     }
     
-    
-    
-    // MARK: UICollectionViewDelegateFlowLayout
-    
-    // 每一个Cell的大小
+    // MARK : UICollectionView
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: 50, height: 50)
-    }
-
-    // 最小列间距
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return 10
+        return itemSize
     }
     
-    // 设置每一组cell的边界
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        return edgeInsets
     }
-    
-    // 最小行间距
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return size
+    }
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
         return 20
     }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: 10, height: 10)
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 20
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: 10, height: 10)
-    }
-    
+
     /*
     // MARK: - Navigation
 
@@ -89,10 +76,10 @@ class CollectionViewController: UICollectionViewController,UICollectionViewDeleg
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
+    
         // Configure the cell
-        
-        cell.backgroundColor = cellColor ? UIColor.redColor():UIColor.blueColor()
+        cell.backgroundColor = cellColor ? UIColor(red: 0.7, green: 0.7, blue: 0, alpha: 0.6) : UIColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.8)
         cellColor = !cellColor
     
         return cell
