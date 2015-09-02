@@ -12,7 +12,9 @@
 			- layoutAttributeForElementsInRect()
 				 返回特定区域内的布局属性
 	 2. Calculating Layout Attributes(计算 布局的属性)
-	 			 
+	 	cell 宽度不变，变高度 ，高度（caption，comment，image.size.height）	
+
+![0](Resource/0-1.png)		 
 * UICollectionViewFlowLayout
 
 ## eg 1. FlickrSearch 
