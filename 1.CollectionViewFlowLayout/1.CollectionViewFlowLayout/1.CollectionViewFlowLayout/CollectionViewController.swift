@@ -13,8 +13,9 @@ private var cellColor = true
 private let edgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
 private let itemSize = CGSize(width: 75, height: 75)
 private let size = CGSize(width: 100, height: 30)
+private var galleryItems:[GalleryItem] = []
 
-class CollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout{
+class CollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout,UICollectionViewDelegate{
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,12 +27,35 @@ class CollectionViewController: UICollectionViewController,UICollectionViewDeleg
         self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
+        
+        initGalleryItems()
+        collectionView?.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK : read items from the plist file and create correspinding model items
+    private func initGalleryItems(){
+        var items = [GalleryItem]()
+        let intputFile = NSBundle.mainBundle().pathForResource("items", ofType: "plist")
+        let intputDataArray = NSArray(contentsOfFile: intputFile!)
+        
+        for inputItem in intputDataArray as! [Dictionary<String,String>]{
+            let galleryItem = GalleryItem(dataDictionary: inputItem)
+            items.append(galleryItem)
+        }
+        galleryItems = items
+    }
+    
+    override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        let commentView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "CollectionReusableView", forIndexPath: indexPath) as! CollectionReusableView
+        commentView.commentLabel.text = "Supplementary view of kind \(kind)"
+        return commentView
+    }
+    
     
     // MARK : UICollectionView
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -72,13 +96,14 @@ class CollectionViewController: UICollectionViewController,UICollectionViewDeleg
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
-        return 100
+        return galleryItems.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CollectionViewCell
     
         // Configure the cell
+        cell.setGalleryItem(galleryItems[indexPath.row])
         cell.backgroundColor = cellColor ? UIColor(red: 0.7, green: 0.7, blue: 0, alpha: 0.6) : UIColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.8)
         cellColor = !cellColor
     
@@ -87,6 +112,14 @@ class CollectionViewController: UICollectionViewController,UICollectionViewDeleg
 
     // MARK: UICollectionViewDelegate
 
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let alert = UIAlertController(title: "didSelectItemAtIndexPath", message: "indexPath:\(indexPath)", preferredStyle: .Alert)
+        
+        let alertAction = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Destructive, handler: nil)
+        alert.addAction(alertAction)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
     /*
     // Uncomment this method to specify if the specified item should be highlighted during tracking
     override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {

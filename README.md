@@ -42,4 +42,12 @@
 
 > Layouts can be swapped out during runtime and the collection view can even automatically animate switching from one layout to another!
 
-2.
+2. UICollectionViewDelegateFlowLayout
+	 - sizeForItemAtIndexPath -> CGSize
+	 - insetForSectionAtIndex -> UIEdgeInsets
+	 - minimumLineSpacingForSectionAtIndex ->CGFloat
+	 - minimumInteritemSpacingForSectionAtIndex ->CGFloat
+	 - referenceSizeForHeaderInSection ->CGSize
+	 - referenceSizeForFooterInSection ->CGSize
+
+	 

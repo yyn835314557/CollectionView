@@ -11,4 +11,7 @@ import UIKit
 class CollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var imageView: UIImageView!
+    func setGalleryItem(item:GalleryItem){
+        imageView.image = UIImage(named:item.itemImage )
+    }
 }
